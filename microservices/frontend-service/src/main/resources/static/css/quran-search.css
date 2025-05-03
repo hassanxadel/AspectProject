@@ -1,0 +1,262 @@
+/* Base Styles */
+:root {
+  /* Emerald colors */
+  --color-emerald-300: #6ee7b7;
+  --color-emerald-400: #34d399;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+  --color-emerald-900: #064e3b;
+  
+  /* Green color for Baraka brand */
+  --color-baraka-green: #00a550;
+  
+  /* Amber colors */
+  --color-amber-50: #fffbeb;
+  --color-amber-300: #fcd34d;
+  --color-amber-600: #d97706;
+  --color-amber-900: #78350f;
+  
+  /* Gray scale */
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-800);
+  background-image: none;
+}
+
+/* Navbar Styles */
+.navbar {
+  background-color: white !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border-radius: 30px;
+}
+
+.navbar-brand {
+  font-weight: 800;
+  color: var(--color-baraka-green) !important;
+}
+
+.baraka-brand {
+  color: var(--color-baraka-green);
+  font-weight: 800;
+  margin-right: 15px;
+}
+
+.nav-link {
+  color: var(--color-gray-700) !important;
+  text-decoration: none !important;
+  border-radius: 20px;
+}
+
+.nav-item.active .nav-link {
+  color: var(--color-emerald-600) !important;
+  font-weight: 600;
+}
+
+.top-navbar .nav-item.active .nav-link {
+  background-color: var(--color-emerald-600);
+  color: white !important;
+}
+
+/* Islamic Pattern Decorations */
+.islamic-pattern {
+  position: fixed;
+  height: 100%;
+  width: 180px;
+  background-image: url('/assets/images/sides.png');
+  background-repeat: repeat-y;
+  z-index: -1;
+}
+
+.islamic-pattern-left {
+  left: -20px;
+}
+
+.islamic-pattern-right {
+  right: 0;
+}
+
+/* Card Styles */
+.card {
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.card-header {
+  background-color: white;
+  border-bottom: 1px solid var(--color-gray-200);
+  padding: 1.5rem;
+}
+
+.card-header h2 {
+  margin: 0;
+  color: var(--color-gray-800);
+  font-weight: 600;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+/* Search Form */
+.search-container {
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.form-control {
+  border: 1px solid var(--color-gray-300);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  height: auto;
+}
+
+.form-control:focus {
+  border-color: var(--color-emerald-500);
+  box-shadow: 0 0 0 0.2rem rgba(16, 185, 129, 0.25);
+}
+
+/* Nav Tabs */
+.nav-tabs {
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+.nav-tabs .nav-link {
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  color: var(--color-gray-600) !important;
+  padding: 0.75rem 1rem;
+  font-weight: 500;
+}
+
+.nav-tabs .nav-link.active {
+  color: var(--color-emerald-600) !important;
+  border-bottom: 2px solid var(--color-emerald-500);
+  background-color: transparent;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--color-emerald-600);
+  border-color: var(--color-emerald-600);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background-color: var(--color-emerald-700);
+  border-color: var(--color-emerald-700);
+}
+
+/* Results Styling */
+.result-card {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 4px;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border-left: 3px solid var(--color-emerald-500);
+}
+
+.arabic-text {
+  font-family: 'Traditional Arabic', 'Arial', sans-serif;
+  font-size: 1.5rem;
+  direction: rtl;
+  line-height: 2;
+  margin: 1rem 0;
+}
+
+/* RTL Support */
+[dir="rtl"] .input-group .form-control {
+  border-radius: 0 4px 4px 0;
+}
+
+[dir="rtl"] .input-group-append {
+  margin-right: -1px;
+  margin-left: 0;
+}
+
+/* Recent Searches */
+.recent-searches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.recent-search-item {
+  background-color: var(--color-amber-50);
+  border: 1px solid var(--color-amber-300);
+  color: var(--color-amber-900);
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.recent-search-item:hover {
+  background-color: var(--color-amber-300);
+}
+
+/* Autocomplete Suggestions */
+.suggestions-container {
+  position: absolute;
+  background-color: white;
+  border: 1px solid var(--color-gray-300);
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  top: 100%; /* Position it right below the input */
+  left: 0;
+  margin-top: 1px; /* Small gap between input and suggestions */
+}
+
+.suggestion-item {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.suggestion-item:hover {
+  background-color: var(--color-gray-100);
+}
+
+.suggestion-item:not(:last-child) {
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+/* For the home page */
+#search-suggestions {
+  top: calc(100% + 5px);
+}
+
+/* Footer */
+.footer {
+  background-color: white !important;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Search Title */
+.search-title {
+  color: var(--color-baraka-green);
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: 800;
+  font-size: 32px;
+} 

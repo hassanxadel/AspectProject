@@ -1,0 +1,35 @@
+# Git
+.git
+.gitignore
+
+# Maven
+target/*
+!target/*.jar
+mvnw
+mvnw.cmd
+.mvn
+
+# IDE specific files
+.idea/
+*.iml
+*.iws
+*.ipr
+.settings/
+.project
+.classpath
+.factorypath
+.vscode/
+
+# Logs
+logs/
+*.log
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Application specific
+README.md
+LICENSE
+docker-compose.yml
+.dockerignore 

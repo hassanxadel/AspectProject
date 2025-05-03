@@ -1,0 +1,36 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: surah-service
+          uri: http://quran-service:8082
+          predicates:
+            - Path=/api/surahs/**
+          filters:
+            - RewritePath=/api/surahs/(?<path>.*), /api/surahs/$\{path}
+
+        - id: ayah-service
+          uri: http://quran-service:8082
+          predicates:
+            - Path=/api/ayahs/**
+          filters:
+            - RewritePath=/api/ayahs/(?<path>.*), /api/ayahs/$\{path}
+            
+        - id: frontend-service
+          uri: http://frontend-service:8083
+          predicates:
+            - Path=/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always 

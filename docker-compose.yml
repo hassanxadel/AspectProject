@@ -1,0 +1,116 @@
+# Microservices architecture with proper networking
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=quran_db
+      - MYSQL_USER=quran_user
+      - MYSQL_PASSWORD=quran_pass
+    ports:
+      - "3307:3306"
+    networks:
+      - quran-network
+    volumes:
+      - mysql-data:/var/lib/mysql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Quran Service (combined Surah and Ayah)
+  quran-service:
+    build:
+      context: ./microservices/quran-service
+      dockerfile: Dockerfile
+    container_name: quran-service
+    ports:
+      - "9082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/quran_db?useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=quran_user
+      - SPRING_DATASOURCE_PASSWORD=quran_pass
+    networks:
+      - quran-network
+    volumes:
+      - quran-data:/app/data
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Frontend Service
+  frontend-service:
+    build:
+      context: ./microservices/frontend-service
+      dockerfile: Dockerfile
+    container_name: frontend-service
+    ports:
+      - "9083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - QURAN_SERVICE_URL=http://quran-service:8082
+    networks:
+      - quran-network
+    volumes:
+      - frontend-data:/app/data
+    restart: unless-stopped
+    depends_on:
+      - quran-service
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8083/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: ./microservices/api-gateway
+      dockerfile: Dockerfile
+    container_name: api-gateway
+    ports:
+      - "9080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - QURAN_SERVICE_URL=http://quran-service:8082
+      - FRONTEND_SERVICE_URL=http://frontend-service:8083
+    networks:
+      - quran-network
+    volumes:
+      - gateway-data:/app/data
+    restart: unless-stopped
+    depends_on:
+      - quran-service
+      - frontend-service
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+# Define networks
+networks:
+  quran-network:
+    driver: bridge
+
+# Define volumes
+volumes:
+  mysql-data:
+    driver: local
+  quran-data:
+    driver: local
+  frontend-data:
+    driver: local
+  gateway-data:
+    driver: local
